@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div v-if="selected && this.multiple">
+      <input v-for="value in selected" type="hidden" :name="name + '[]'" :value="value" />
+    </div>
+    <div v-else-if="selected">
+      <input type="hidden" :name="name" :value="selected" />
+    </div>
+
     <v-select
       v-model="selected"
       :multiple="multiple"
@@ -20,19 +27,23 @@
       vSelect,
     },
     props: {
+      name: String,
       multiple: Boolean,
       taggable: Boolean,
       items: Object,
       value: [Array, String]
     },
-    computed: {
-      options: function () {
-        return map(JSON.parse(this.items), (label, id) => {
+    data() {
+      return {
+        options: map(JSON.parse(this.items), (label, id) => {
           return {id, label};
-        });
-      },
-      selected: function () {
-        return JSON.parse(this.value);
+        }),
+        selected: (() => {
+          if (this.multiple && this.value) {
+            return JSON.parse(this.value);
+          }
+          return this.value;
+        })()
       }
     }
   }
