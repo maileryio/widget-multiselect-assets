@@ -13,6 +13,16 @@
       :taggable="taggable"
       :options="options"
       :reduce="(option) => option.id">
+
+      <template #search="{attributes, events}">
+        <input
+          class="vs__search form-control"
+          :required="required"
+          v-bind="attributes"
+          v-on="events"
+        />
+      </template>
+
     </v-select>
   </div>
 </template>
@@ -30,10 +40,11 @@
       name: String,
       multiple: Boolean,
       taggable: Boolean,
+      required: Boolean,
       items: Object,
       value: [Array, String]
     },
-    data() {
+    data() {console.log(this.required)
       return {
         options: map(JSON.parse(this.items), (label, id) => {
           return {id, label};
@@ -50,3 +61,21 @@
 </script>
 
 <style src="vue-select/dist/vue-select.css"></style>
+
+<style>
+  * {
+    --vs-dropdown-bg: #fff;
+  }
+
+  .v-select {
+    background-color: var(--vs-dropdown-bg);
+  }
+
+  .vs__search {
+    margin: 0;
+  }
+
+  .vs__dropdown-toggle {
+    padding: 0;
+  }
+</style>
