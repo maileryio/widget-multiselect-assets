@@ -8,6 +8,7 @@
     </div>
 
     <v-select
+      ref="vSelect"
       v-model="selected"
       :class="className"
       :multiple="multiple"
@@ -19,7 +20,8 @@
       :options="options"
       :placeholder="placeholder"
       :reduce="(option) => option.id"
-      :selectable="(option) => !!option.id">
+      :selectable="(option) => !!option.id"
+      @open="doSomething">
 
       <template #search="{attributes, events}">
         <input
@@ -101,6 +103,13 @@
       required () {
         return this.$props.required && this.selected && this.selected.length == 0;
       }
+    },
+    methods: {
+      doSomething () {
+        this.$nextTick(() => {
+          this.$refs.vSelect.$el.focus();
+        });
+      }
     }
   }
 </script>
@@ -108,13 +117,9 @@
 <style src="vue-select/dist/vue-select.css"></style>
 
 <style lang="scss">
-  * {
-    --vs-dropdown-bg: #fff;
-  }
-
   .ui-select {
     .v-select {
-      background-color: var(--vs-dropdown-bg);
+      background-color: #fff;
       height: auto;
     }
 
