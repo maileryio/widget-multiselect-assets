@@ -8,9 +8,8 @@
     </div>
 
     <v-select
-      ref="vSelect"
       v-model="selected"
-      :class="className"
+      :class="[className, focused ? 'focused' : '']"
       :multiple="multiple"
       :taggable="taggable"
       :clearable="clearable"
@@ -21,7 +20,8 @@
       :placeholder="placeholder"
       :reduce="(option) => option.id"
       :selectable="(option) => !!option.id"
-      @open="doSomething">
+      @open="() => focused = true"
+      @close="() => focused = false">
 
       <template #search="{attributes, events}">
         <input
@@ -30,6 +30,12 @@
           v-bind="attributes"
           v-on="events"
         />
+      </template>
+
+      <template #open-indicator="{ attributes }">
+        <span v-bind="attributes">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbklEQVRIie2PMQqAMAxFXwfP6qJVPIjYzcOKdUkhQ0BaCoLkLS3k818CjuN8ztApYzIDl7xvmalFsAIZuIFozKPMMrC0CAJwKIkuGVX5KdkmLEm3ci1JSlLKU49yLSmXVG1es0EANvnvInKcP/AA784fpjlWwNQAAAAASUVORK5CYII="/>
+        </span>
       </template>
 
     </v-select>
@@ -93,7 +99,8 @@
         })(),
         options: map(JSON.parse(this.items), (label, id) => {
           return {id, label};
-        })
+        }),
+        focused: false
       }
     },
     computed: {
@@ -102,13 +109,6 @@
       },
       required () {
         return this.$props.required && this.selected && this.selected.length == 0;
-      }
-    },
-    methods: {
-      doSomething () {
-        this.$nextTick(() => {
-          this.$refs.vSelect.$el.focus();
-        });
       }
     }
   }
@@ -121,15 +121,38 @@
     .v-select {
       background-color: #fff;
       height: auto;
+
+      &.form-control.focused {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+
+        &.is-valid {
+          border-color: #28a745;
+          box-shadow: 0 0 0 0.2rem rgb(40 167 69 / 25%);
+        }
+
+        &.is-invalid {
+          border-color: #dc3545;
+          box-shadow: 0 0 0 0.2rem rgb(220 53 69 / 25%);
+        }
+      }
     }
 
     .vs__search {
       margin: 0;
     }
 
+    .vs__actions {
+      padding: 0;
+    }
+
     .vs__dropdown-toggle {
       border: none;
-      padding: 0 0 2px;
+      padding: 0;
+    }
+
+    .vs__dropdown-menu {
+      margin-top: 3px;
     }
 
     .vs__selected {
