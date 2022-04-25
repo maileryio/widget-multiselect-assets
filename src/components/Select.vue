@@ -19,7 +19,7 @@
       :options="options"
       :placeholder="placeholder"
       :reduce="(option) => option.id"
-      :selectable="(option) => !!option.id"
+      :selectable="(option) => typeof option.id !== 'undefined'"
       @open="() => focused = true"
       @close="() => focused = false">
 
@@ -90,7 +90,11 @@
     data() {
       return {
         selected: (() => {
-          const value = this.value ? JSON.parse(this.value) : null;
+          let value = this.value;
+
+          try {
+            value = JSON.parse(value);
+          } catch (e) {}
 
           if (!this.multiple && Array.isArray(value)) {
             return value[0];
