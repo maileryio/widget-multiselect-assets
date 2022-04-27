@@ -1,5 +1,7 @@
 <template>
   <div class="ui-select">
+    <input type="hidden" :name="name" />
+
     <div v-if="hasSelected && multiple">
       <input v-for="value in selected" type="hidden" :name="name + '[]'" :value="value" />
     </div>
