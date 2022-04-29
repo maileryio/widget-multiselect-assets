@@ -49,6 +49,18 @@
   import filter from 'lodash/filter';
   import map from 'lodash/map';
 
+  var isJson = (item) => {
+    item = typeof item !== 'string' ? JSON.stringify(item) : item;
+
+    try {
+      item = JSON.parse(item);
+    } catch (e) {
+      return false;
+    }
+
+    return typeof item === 'object' && item !== null;
+  }
+
   export default {
     name: 'ui-select',
     components: {
@@ -94,9 +106,11 @@
         selected: (() => {
           let value = this.value;
 
-          try {
-            value = JSON.parse(value);
-          } catch (e) {}
+          if (isJson(value)) {
+            try {
+              value = JSON.parse(value);
+            } catch (e) {}
+          }
 
           if (!this.multiple && Array.isArray(value)) {
             return value[0];
