@@ -15,9 +15,10 @@
       :multiple="multiple"
       :taggable="taggable"
       :clearable="clearable"
+      :closeOnSelect="closeOnSelect"
       :searchable="searchable"
       :deselectFromDropdown="deselectFromDropdown"
-      :closeOnSelect="closeOnSelect"
+      :disabled="disabled"
       :options="options"
       :placeholder="placeholder"
       :reduce="(option) => option.id"
@@ -84,13 +85,17 @@
       	type: Boolean,
       	default: true
       },
+      closeOnSelect: {
+      	type: Boolean,
+      	default: true
+      },
       deselectFromDropdown: {
           type: Boolean,
           default: false
       },
-      closeOnSelect: {
+      disabled: {
       	type: Boolean,
-      	default: true
+      	default: false
       },
       required: {
       	type: Boolean,
@@ -137,6 +142,10 @@
 <style src="vue-select/dist/vue-select.css"></style>
 
 <style lang="scss">
+  :root {
+    --vs-disabled-bg: #e9ecef;
+  }
+
   .ui-select {
     .v-select {
       background-color: #fff;
@@ -177,6 +186,10 @@
 
     .vs__selected {
       margin: 2px 2px 0;
+    }
+
+    .vs--disabled {
+      background-color: var(--vs-disabled-bg);
     }
   }
 </style>
