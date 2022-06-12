@@ -24,7 +24,8 @@
       :reduce="(option) => option.id"
       :selectable="(option) => typeof option.id !== 'undefined'"
       @open="() => focused = true"
-      @close="() => focused = false">
+      @close="() => focused = false"
+      @input="onInput">
 
       <template #search="{attributes, events}">
         <input
@@ -135,6 +136,11 @@
       required () {
         return this.$props.required && this.selected && this.selected.length == 0;
       }
+    },
+    methods: {
+        onInput (val) {
+          this.$emit('input-callback', val)
+        }
     }
   }
 </script>
