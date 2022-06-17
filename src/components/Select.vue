@@ -66,7 +66,7 @@
   export default {
     name: 'ui-select',
     components: {
-      vSelect,
+      vSelect
     },
     props: {
       name: String,
@@ -191,7 +191,7 @@
     }
 
     .vs__selected {
-      margin: 2px 2px 0;
+      margin: 2px -5px 0;
     }
 
     .vs--disabled {
