@@ -191,7 +191,7 @@
     }
 
     .vs__selected {
-      margin: 2px -5px 0;
+      margin: 2px 2px 0;
     }
 
     .vs--disabled {
