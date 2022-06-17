@@ -61,10 +61,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maileryio/widget-multiselect-assets.git"
+    "url": "git+https://github.com/maileryio/widget-select-assets.git"
   },
   "bugs": {
-    "url": "https://github.com/maileryio/widget-multiselect-assets/issues"
+    "url": "https://github.com/maileryio/widget-select-assets/issues"
   },
-  "homepage": "https://github.com/maileryio/widget-multiselect-assets#readme"
+  "homepage": "https://github.com/maileryio/widget-select-assets#readme"
 }
