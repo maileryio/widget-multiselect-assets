@@ -123,9 +123,15 @@
           }
           return value;
         })(),
-        options: map(JSON.parse(this.items), (label, id) => {
-          return {id, label};
-        }),
+        options: (() => {
+          if (!this.items) {
+            return [];
+          }
+
+          return map(JSON.parse(this.items), (label, id) => {
+            return {id, label};
+          })
+        })(),
         focused: false
       }
     },
